@@ -35,3 +35,13 @@ from
 	join nyc_census_blocks as blk2
 on	blk1.blkid != blk2.blkid
 and 	ST_Distance(blk1.geom, blk2.geom) <= 1;
+
+/*VERSION2*/
+select
+	blk1.blkid as blockfrom,
+	blk2.blkid as adjacentblock
+from 
+	nyc_census_blocks as blk1
+	join nyc_census_blocks as blk2
+on	blk1.blkid != blk2.blkid
+and 	ST_Overlaps (ST_Boundary(blk1.geom),ST_Boundary(blk2.geom))= true;
